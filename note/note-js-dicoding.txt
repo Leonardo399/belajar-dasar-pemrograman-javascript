@@ -1,0 +1,27 @@
+# Struktur Data 
+! Pada modul ini kita akan membahas tentang tipe data JavaScript yang dapat menyimpan struktur data yang lebih kompleks. Beberapa jenis struktur data yang akan kita pelajari, antara lain:
+	- Object
+	- Array
+	- Map
+	- Set
+
+## Object 
+! Untuk menetapkan objek pada sebuah variabel kita gunakan tanda kurung kurawal {}.
+// contoh : 
+	let object = {key1: "value1", key2: "value2", key3: "value3"}
+
+// cara mengakses property pada object
+	- namaObj.namaProperty;
+	- myobj.name;
+	- myobj["my name"]; 
+	! usahakan jangan memakai namaProperty dengan spasi
+
+// cara menambahkan property baru di object
+	- myobj.namaPropertyBaru = value;
+
+
+
+
+
+!! NOTE !! 
+! Tiap bahasa pemrograman memiliki **hampir** tipe data primitif yang sama
