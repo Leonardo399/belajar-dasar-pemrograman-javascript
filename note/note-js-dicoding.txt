@@ -1,4 +1,4 @@
-# Struktur Data 
+# Struktur Data red
 ! Pada modul ini kita akan membahas tentang tipe data JavaScript yang dapat menyimpan struktur data yang lebih kompleks. Beberapa jenis struktur data yang akan kita pelajari, antara lain:
 	- Object
 	- Array
@@ -19,9 +19,555 @@
 // cara menambahkan property baru di object
 	- myobj.namaPropertyBaru = value;
 
+// cara mengubah value property object
+	- myobj.namaProperty = 'value baru';
+
+
+
+## Array
+
+// cara menambah nilai array di akhir index
+	- myarray.push(value1, value2, ...);
+
+// cara menghapus 1 nilai(beserta indexnya) di index akhir array
+	- myarr.pop();
+
+// cara menambah nilai di awal index array
+	- myarr.unshift(value1, value2, ...);
+
+// cara menghapus 1 nilai(beserta indexnya) di index awal array
+	- myarr.shift(); 
+
+// cara menghapus nilai array saja dan membiarkan indexnya tidak bernilai
+	- delete myarr[index];
+		-> output dari nilai array yg dihapus : <1 empty item>
+
+// cara menghapus nilai(beserta indexnya) array pada index yang ditentukan, dan bisa juga menambah nilai dari index yang dihapus
+	- myarr.splice(awal-index-yang-dihapus, jml-index-yang-ingin-dihapus, valueBaru1(opsional), valueBaru2, ....);
+
+
+## Spread Operator
+!! dengan menggunakan spread operator maka kita melakukan copy paste nilai array dan object dengan benar(tanpa reference)
+
+// contoh : 
+	// jika seperti ini
+	console.log(...favorites);
+	// maka ==
+	console.log(favorites[0], favorites[1], favorites[2], favorites[3]);
+
+	// Array
+	const favorites = ["Seafood", "Salad", "Nugget", "Soup"];
+	const others = ["Cake", "Pie", "Donut"];
+
+	const allFavorites = [...favorites, ...others];
+
+	console.log(allFavorites);
+
+	/* output
+	[ 'Seafood', 'Salad', 'Nugget', 'Soup', 'Cake', 'Pie', 'Donut' ]
+	*/
+
+	// Object
+	const obj1 = { firstName: 'Obi-Wan', age: 30 };
+	const obj2 = { lastName: 'Kenobi', gender: 'M' };
+
+	const newObj = { ...obj1, ...obj2 };
+
+	console.log(newObj);
+
+	/* output
+	{ firstName: 'Obi-Wan', age: 30, lastName: 'Kenobi', gender: 'M' }
+	*/
+
+## Destructuring Object
+! Penulisan sintaksis destructuring object pada ES6 menggunakan object literal ({ }) di sisi kiri dari operator assignment.
+
+// contoh : 
+	const profile = {
+	    firstName: "John",
+	    lastName: "Doe",
+	    age: 18
+	}
+	 
+	const {firstName, lastName, age} = profile;
+	 
+	console.log(firstName, lastName, age);
+	 
+	/* output:
+	John Doe 18
+	*/
+	------
+	let firstName = "Dimas";
+	let age = 20;
+	 
+	// menginisialisasi nilai baru melalui object destruction
+	({firstName, age} = profile); // wajib memakai () 
+
+
+### Default Values
+// contoh : 
+	const profile = {
+	    firstName: "John",
+	    lastName: "Doe",
+	    age: 18
+	}
+	 
+	- const {firstName, age, isMale = false} = profile;
+
+### Assigning to Different Local Variable Names
+// contoh : 
+	const profile = {
+	    firstName: "John",
+	    lastName: "Doe",
+	    age: 18
+	}
+	 
+	const {firstName: localFirstName = 'febri', lastName: localLastName, age: localAge} = profile;
+	 
+
+## Destruturing Array
+// contoh : 
+	const favorites = ["Seafood", "Salad", "Nugget", "Soup"];
+	const [firstFood, secondFood, thirdFood, fourthFood] = favorites;
+ 	----- 
+	const favorites = ["Seafood", "Salad", "Nugget", "Soup"];
+ 	const [, , thirdFood ] = favorites;
+ 	// Destructuring Assignment
+ 	const favorites = ["Seafood", "Salad", "Nugget", "Soup"];
+ 
+	let myFood = "Ice Cream";
+	let herFood = "Noodles";
+	 
+	[myFood, herFood] = favorites;
+	------
+	let a = 1;
+	let b= 2;
+
+	[a, b] = [b, a]
+	// Default Values 
+	const favorites = ["Seafood"];
+ 
+	const [myFood, herFood = "Salad"] = favorites
+
+## Map
+! Map adalah tipe data yang menyimpan koleksi data dengan format key-value layaknya Object. Yang membedakan adalah Map memperbolehkan key dengan tipe data apa pun, dibandingkan Object yang hanya mengizinkan key bertipe String atau Symbol.
+
+! Untuk mendefinisikan Map gunakan constructor seperti di bawah ini: 
+	- const myMap = new Map();
+
+! Apabila ingin menetapkan nilai dari Map secara langsung, gunakan array multi dimensi seperti ini:
+	const myMap = new Map([
+	    ['1', 'a String key'],
+	    [1, 'a number key'],
+	    [true, true]
+	]);
+
+	console.log(myMap);
+
+	/* output
+	Map(3) { '1' => 'a String key', 1 => 'a number key', true => true }
+	*/
+
+! Ketika sudah membuat objek Map, kita bisa mendapatkan nilainya berdasarkan key tertentu dengan metode get(). Lalu, untuk menambahkan pasangan key-value baru gunakan metode set().
+	// contoh : 
+		const capital = new Map([
+		    ["Jakarta", "Indonesia"],
+		    ["London", "England"],
+		    ["Tokyo", "Japan"]
+		]);
+
+		console.log(capital.size);
+		console.log(capital.get("London"));
+		capital.set("New Delhi", "India");
+		console.log(capital.size);
+		console.log(capital.get("New Delhi"));
+
+		/* output
+		3
+		England
+		4
+		India
+		 */
+
+// metode untuk mengetahui apakah ada key dalam map
+	// contoh : 
+		const mymap = new Map([
+		  ['name', 'febrianto'],
+		  ['npm', 2018]
+		]);
+
+		console.log(mymap.has('name')); // output : true
+
+// metode untuk menghapus key dan value map
+	// contoh : 
+		const mymap = new Map([
+		  ['name', 'febrianto'],
+		  ['npm', 2018]
+		]);
+
+		console.log(mymap.delete('name')); // output : true (berhasil menghapus)
+
+
+
+## Set
+! Struktur data yang akan kita bahas berikutnya adalah Set. Set sederhananya merupakan kumpulan nilai (set of values). Hal yang membedakan Set dengan struktur data yang lain adalah data pada Set tidak berurutan dan juga tidak diindeks. Selain itu, data di dalam Set juga bersifat unik dan tidak ada duplikasi. Perhatikan contoh deklarasi Set di bawah ini:
+	const numberSet = new Set([1, 4, 6, 4, 1]);
+
+	console.log(numberSet);
+
+	/* output
+	Set(3) { 1, 4, 6 }
+	*/
+
+// metode untuk menambahkan dan menghapus element set
+	! Fungsi add() hanya menerima satu argumen. Jika Anda memasukkan array, maka array tersebut akan dianggap sebagai satu elemen sendiri. Nilai yang duplikat akan diabaikan.
+	// contoh : 
+		const numberSet = new Set([1, 4, 6, 4, 1]);
+		numberSet.add(5);
+		numberSet.add([98,43,23]);
+		numberSet.add(6);
+
+		numberSet.delete(4); // argumen yang dimasukkan ke dalam fungsi delete adalah nilai yang ingin dihapus, bukan index-nya.
+
+		console.log(numberSet);
+
+		/* output
+		Set(4) { 1, 6, 5, [ 98, 43, 23 ] }
+		*/
+
+
+## WeakMap dan WeakSet
+! WeakMap merupakan varian dari Map yang mendukung garbage collection. Garbage collection adalah proses di mana interpreter JavaScript mengambil kembali memori yang tidak lagi “dapat dijangkau” dan tidak dapat digunakan oleh program [3]. Garbage collection di JavaScript dilakukan secara otomatis dan bukan menjadi urusan dari developer.
+
+! Yang dimaksud weak dalam WeakMap adalah referensi terhadap nilai yang disimpan. Apabila suatu nilai yang disimpan di WeakMap sudah tidak terjangkau atau tidak bisa lagi diakses, maka referensi ke memorinya akan dihapus.
+
+! Berikut ini adalah beberapa hal yang membedakan antara Map dan WeakMap:
+	- Key dari WeakMap harus berupa object atau array. Nilai primitif tidak bisa digunakan sebagai key karena tidak mendukung garbage collection.
+	- WeakMap memiliki methodget(), set(), has(), dan delete(). Namun, WeakMap tidak termasuk kategori iterable sehingga tidak memiliki method keys(), values(), atau forEach().
+	- WeakMap juga tidak memiliki property size. Ini karena ukuran WeakMap dapat berubah karena proses garbage collection.
+
+// contoh : 
+	// WeakMap()
+	let visitsCountMap = new WeakMap(); // Menyimpan daftar user
+
+	function countUser(user) {
+	    let count = visitsCountMap.get(user) || 0;
+	    visitsCountMap.set(user, count + 1);
+	}
+
+	let jonas = { name: "Jonas" };
+	countUser(jonas);                // Menambahkan user "Jonas"
+
+	jonas = null;                    // Data object "Jonas" dihapus
+
+	console.log(visitsCountMap);
+
+	/* output
+	WeakMap { <items unknown> }
+	*/
+
+
+! Seperti halnya WeakMap, WeakSet adalah versi weak reference dari Set. Perbedaan antara WeakSet dan Set antara lain:
+	- WeakSet tidak bisa menyimpan nilai primitif.
+	- WeakSet bukan iterable dan hanya memiliki method add(), has(), dan delete().
+	- WeakSet tidak memiliki properti size.
+
+
+
+# Object-Oriented Programming (OOP)
+! Object Oriented Programming (OOP) adalah salah satu paradigma dalam dunia pemrograman komputer. Ia adalah pendekatan berbasis objek, di mana suatu objek terdiri dari kumpulan atribut dan method di dalamnya. Di dalam JavaScript, atribut adalah variabel yang digunakan untuk menyimpan nilai. Sementara method adalah fungsi yang digunakan untuk menjalankan suatu proses.
+
+!! paradigma OOP terdapat 4 pilar utama, yaitu encapsulation, abstraction, inheritance, dan polymorphism.
+
+
+
+## Class
+! JavaScript memiliki konsep bernama prototype. Prototype adalah properti internal yang akan selalu ada ketika sebuah objek dibuat
+
+// Penulisan method menggunakan prototype 
+	function Mail() {
+	    this.from = 'pengirim@dicoding.com';
+	};
+	 
+	Mail.prototype.sendMessage = function n(msg, to) {
+	  console.log(`you send: ${msg} to ${to} from ${this.from}`);
+	};
+
+	// pemanggilan
+ 
+	const mail1 = new Mail();
+	mail1.sendMessage('hallo', 'penerima@dicoding.com');
+
+// Penulusan method tanpa pendekatan prototype
+	function Mail(){
+	    this.from = "pengirim@dicoding.com",
+	  	this.sendMessage = function(msg, to) {
+	    console.log(`you send: ${msg} to ${to} from ${this.from}`);
+	  } 
+	};	
+
+	// pemanggilan
+ 
+	const mail1 = new Mail();
+	mail1.sendMessage('hallo', 'penerima@dicoding.com');
+
+!! penggunaan sintaksis class pada javascript hanyalah syntatic sugar dari prototype itu sendiri.
+
+
+## Property & Method
+! di dalam JavaScript sendiri terdapat 2 jenis akses identifier untuk sebuah field:
+	- Public : dapat diakses dari mana pun.
+	- Private : hanya dapat diakses dari dalam kelas itu sendiri.
+
+// contoh cara membuat property/method yang bersifat private 
+	class Mail {
+	    constructor() {
+	        this._contacts = []; // dengan menambahkan '_' sebelum nama property/methodnya
+	        this.from = 'pengirim@dicoding.com';
+	    }
+	    sendMessage(msg, to) {
+		    console.log(`you send: ${msg} to ${to} from ${this.from}`);
+		};
+	}
+
+	// private pada contructor function
+	function Mail() {
+	    this.from = 'pengirim@dicoding.com';
+	    let contacts = []; // membuat property/method private
+	}
+
+## 4 Pilar OOP
+! Enkapsulasi adalah kondisi di mana attribute atau method di dalam class dibungkus dan bersifat privat. Artinya objek lain tidak bisa mengakses atau mengubah nilai dari property secara langsung.
+
+! Abstraksi dapat dikatakan merupakan penerapan alami dari enkapsulasi. Abstraksi berarti sebuah objek hanya menunjukkan operasinya secara high-level. Misalnya kita cukup tahu bagaimana bagaimana pesan dikirim atau diterima, namun kita tidak perlu tahu seperti apa proses enkripsi dan dekripsi isi pesan, atau bagaimana sebuah daftar contact dapat bertambah.
+
+### Inheritance
+! Beberapa objek bisa memiliki beberapa karakteristik atau perilaku yang sama, tetapi mereka bukanlah objek yang sama. Di sinilah inheritance atau pewarisan berperan
+
+// contoh : 
+	class Mail {
+	    constructor(author) {
+	        this.from = author;
+	        this._contacts = [];
+	    }
+	    sendMessage(msg, to) {
+	        console.log(`you send: ${msg} to ${to} from ${this.from}`);
+	        this._contacts.push(to);
+	    }
+	    showAllContacts() {
+	        return this._contacts;
+	    }
+	}
+
+	class WhatsApp extends Mail {
+	    constructor() {
+	        super(); // !! wajib ada ini untuk inheritancenya
+	        this.username = 'dicoding';
+	        this.isBussinessAccount = true;
+	    }
+	    myProfile() {
+	        return `my name ${this.username}, is ${this.isBussinessAccount ? 'Business' : 'Personal'}`;
+	    }
+	}
+
+	const wa1 = new WhatsApp(080111000222);
+	console.log(wa1.myProfile());
+	// my name dicoding, is Business
+
+
+### Polymorphism
+! Polymorphism dalam bahasa Yunani berarti “banyak bentuk”. Sederhananya objek dapat memiliki bentuk atau implementasi yang berbeda-beda pada satu metode yang sama. Semua jenis Mail dapat mengirim pesan, namun whatsapp, email, sms tentunya memiliki cara yang berbeda dalam mengirim pesan, misalkan: whatsapp dapat mengirim pesan suara sedangkan yang lainnya tidak, email dapat menyaring konten spam saat mengirim pesan sedangkan yang lain tidak. Perbedaan bentuk atau cara mengirim pesan tersebut merupakan contoh dari polymorphism.
+
+
+
+## Overriding Method
+! Overriding adalah teknik untuk kita melakukan perombakan (baik secara keseluruhan maupun tidak) pada sebuah method ataupun constructor yang dimiliki oleh parent class. Sehingga, ia dapat disesuaikan dengan behavior di child class.
+
+
+### Overriding Constructor
+! pada kasus sebelumnya bagaimanan jika kita menambahkan username dan isBussinessAccount ke dalam constructor?
+	class WhatsApp extends Mail {
+	    constructor(username, isBussinessAccount, phone) {
+	        super();
+	        this.username = username;
+	        this.isBussinessAccount = isBussinessAccount;
+	    }
+	}
+	 
+	const wa1 = new WhatsApp('dicoding', true, 089989090898);
+	/**
+	Error:
+	Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+	**/
+
+	! Eror di atas terjadi karena constructor pada kelas parent gagal dieksekusi, meskipun kita telah menggunakan operator this.nameOfProperty. Solusinya kita dapat menggunakan operator super() untuk mengeksekusi method parent-nya. Sehingga, constructor pada kelas WhatsApp menjadi seperti ini.
+		constructor(username, isBussinessAccount, phone) {
+		  super(phone);
+		  this.username = username;
+		  this.isBussinessAccount = true;
+		}
+
+
+## Overriding Method
+! Pada dasarnya semua method yang ada pada kelas parent dapat diakses langsung di child kelasnya (as is).
+
+// contoh override pada method sendMessage.
+	class WhatsApp extends Mail {
+	    constructor(username, isBussinessAccount, phone) {
+	        super(phone);
+	        this.username = username;
+	        this.isBussinessAccount = isBussinessAccount;
+	    }
+	 
+	    // Overriding method => Melakukan Override Total
+	    sendMessage(msg, to) {
+	        console.log('Send by WA');
+	    }
+	}
+	! Ketika kita memanggil method sendMessage pada contoh di atas, ia hanya akan mengeksekusi kode yang ada pada child class.
+
+	! Untuk tetap melakukan eksekusi kode pada parent class maka perlu menggunakan operator super.methodName().
+		sendMessage(msg, to) {
+		    super.sendMessage(msg, to);
+		    console.log('Send by WA');
+		}
+
+
+## Object Composition
+! Object composition adalah prinsip komposisi dari sebuah alur bisnis tanpa perlu melakukan pewarisan dari parent class. Prinsip ini didasarkan pada kumpulan perilaku (method/function) yang sudah kita definisikan. Sehingga, ketika ingin membuat alur bisnis lain dengan beberapa perilaku (method) yang sama, kita dapat menggunakan fungsi yang sudah ada tanpa melakukan inheritance/pewarisan.
+
+// contoh : 
+	// [1] list of abstractions
+	const canSendMessage = self => ({
+	    sendMessage: () => console.log('send message:', self.message)
+	  });
+
+	const checkIsValidPhone = self => ({
+	    isValid: () => console.log('valid phone', self.from)
+	  });
+
+	// [2] crate object composition
+	const personalEnterprise = (from, message, store) => {
+	  // [3] attributes
+	  const self = {
+	    from,
+	    message,
+	    store
+	  };
+	  // [4] method
+	  const personalEnterpriseBehaviors = self => ({
+	    createCatalog: () => console.log('Catalog has created: ', self.store)
+	  });
+	  
+	  // [5] create object composition
+	  return Object.assign(self, personalEnterpriseBehaviors(self), canSendMessage(self), checkIsValidPhone(self));
+	};
+
+	const pe1 = personalEnterprise('pengirim@gmail.com', 'hei produk baru nih', 'Dicoding Store');
+	pe1.createCatalog(); //Catalog has created:  Dicoding Store
+	pe1.sendMessage(); //send message: hei produk baru nih
+
+! Penjabaran kode di atas:
+	1. Kita membuat sebuah abstraksi untuk method-method yang umum digunakan (di sini misalkan method mengirim pesan, dan validasi nomor hp).
+	2. Kita membuat sebuah kelas baru dengan nama personalEnterprise, di mana seperti biasa kita dapat menggunakan parameter yang akan digunakan.
+	3. Pada  object composition ini, penggunaan parameter biasa digunakan untuk mendaftarkan attribute-attribute dari kelas tersebut. Pada contoh di atas, kita mengumpulkan attribute tersebut pada konstanta bernama self atau state.
+	4. Method, kita dapat juga menambahkan method/fungsi yang spesifik hanya ada pada kelas tersebut (kapabilitasnya hanya pada kelas tersebut / tidak umum).
+	5. Proses pembuatan object dengan perintah Object.assign(attribute, method1, method2, methodN).
+
+
+## Built-in Class
+! Dalam JavaScript sendiri terdapat built-in class bawaan, misalnya Date, Object, Array, Math, dan String. Built-in class tersebut dapat digunakan untuk memanipulasi data-data terkait dengan array, perintah matematik, manipulasi karakter, dan manipulasi objek.
+
+// contoh built-in class Date
+	! dalam meng-instansiasi Date object tersebut dengan 4 cara:
+	// #1 tanpa parameter, yang berarti `myDate` akan berisi tanggal dan waktu saat ini
+	const myDate = new Date(); 
+	 
+	// #2 parameter tanggal dalam bentuk string, misal  "January 01, 2021" 
+	const myDate = new Date(dateString); 
+	 
+	// #3 parameter dalam bentuk number, misal 87400000
+	const myDate = new Date(miliseconds); 
+	 
+	// #4 parameter tanggal dalam bentuk number (7 parameter), [hour,minute,second,millisecond] bersifat opsional
+	const myDate = new Date(year,month,date,hour,minute,second,millisecond); 
+
+! Dalam object Date terdapat beberapa method yang dapat kita gunakan. Berikut adalah daftar method yang umum digunakan. (format: method - definisi <br> contoh)
+	- getMonth() - Nilai kembaliannya adalah bulan dalam bentuk angka (0 sampai 11), 0 berarti Januari.	
+		myDate.getMonth()
+	- getFullYear() - Nilai kembaliannya adalah tahun, misalkan 2021.	
+		myDate.getFullYear()
+	- getDate() - Nilai kembaliannya adalah tanggal dari 1 sampai 31.
+		myDate.getDate()
+	- getHours() - Nilai kembaliannya adalah jam dari 0 sampai 23	
+		myDate.getHours()
+	- getMinutes() - Nilai kembaliannya adalah menit dari 0 sampai 59 Nilai kembaliannya	myDate.getMinutes()
+	- getSeconds() - Nilai kembaliannya adalah detik dari 0 sampai 59	
+		myDate.getSeconds()
+	- getMilliseconds() - Nilai kembaliannya adalah mili-detik dari 0 to 999	
+		myDate.getMilliseconds()
+	- getTime() - Nilai kembaliannya adalah waktu dalam bentuk epoch mili-detik (dimulai dari 1 January, 1970 yang berarti 0)	
+		myDate.getTime()
+	- getDay() - Nilai kembaliannya adalah hari dalam seminggu dari 0 sampai 6. 0 berarti minggu	
+		myDate.getDay()
+
+! Selain itu, juga terdapat static method yang dapat digunakan tanpa perlu melakukan instansiasi, yaitu:
+	- parse(datestring)	digunakan untuk merubah tanggal dalam format string, menjadi epoch miliseconds	
+		Date.parse("2021-01-01")
+
+
+### Date String Format
+! Format date string sendiri, secara umum terdiri dari:
+	- YYYY 4 digit tahun, misalkan : 2021
+	- MM -> 2 digit bulan, misalkan : 01 berarti Januari
+	- DD -> 2 digit tanggal 0 sampai 31
+	- HH -> 2 digit jam 0 sampai 23
+	- mm -> 2 digit menit 0 sampai 59
+	- ss -> 2 detik detik 0 sampai 49
+	- sss -> 3 digit milidetik 0 sampai 999
+	- - -> Pemisah untuk tanggal
+	- : -> Pemisah untuk waktu
+	- Z -> Berarti tanggal akan diatur sebagai UTC
+
+// contoh built-in class lainnya
+	const listOfContent = [1,2,”President”, {}];
+	console.log(Array.isArray(listOfContent)); 
+	// result is true
+	 
+	const splitText = "12:20:00".split(':');
+	// result is [ '12', '20', '00' ]
+
+
+## Rangkuman 
+! Berikut ini beberapa materi tambahan yang bisa Anda pelajari untuk mendalami seputar Object-Oriented Programming (OOP):
+	- oop for beginner : https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS
+	- a guide oop in js : https://betterprogramming.pub/object-oriented-programming-in-javascript-b3bda28d3e81
+
+
+
+
+
 
 
 
 
 !! NOTE !! 
 ! Tiap bahasa pemrograman memiliki **hampir** tipe data primitif yang sama
+! operator pangkat di javascript : **
+	// contoh 2 pangkat 3 : 2**3
+! constructor function tidak bisa dibuat menggunakan arrow function
+
+! super(...) digunakan untuk memanggil constructor parent dan hanya dapat digunakan di constructor.
+
+! super.methodName(...) digunakan untuk memanggil parent method.
+! untuk return object menggunakan arrow function tanpa menggunakan kata kunci 'return' maka gunakan '()'
+	// contoh : 
+		const checkIsValidPhone = self => ({
+		    isValid: () => console.log('valid phone', self.from)
+		  });
+
+! Metode Object.assign(target, source1, sourceN,) menyalin semua properti enumerable sendiri dari satu atau lebih objek sumber ke objek target. Ini mengembalikan objek target yang dimodifikasi.
+
+! epoch mili-detik (dimulai dari 1 January, 1970 yang berarti 0)
+
+
