@@ -274,7 +274,7 @@
 
 
 
-# Object-Oriented Programming (OOP)
+# Object-Oriented Programming (OOP) red
 ! Object Oriented Programming (OOP) adalah salah satu paradigma dalam dunia pemrograman komputer. Ia adalah pendekatan berbasis objek, di mana suatu objek terdiri dari kumpulan atribut dan method di dalamnya. Di dalam JavaScript, atribut adalah variabel yang digunakan untuk menyimpan nilai. Sementara method adalah fungsi yang digunakan untuk menjalankan suatu proses.
 
 !! paradigma OOP terdapat 4 pilar utama, yaitu encapsulation, abstraction, inheritance, dan polymorphism.
@@ -542,6 +542,175 @@
 ! Berikut ini beberapa materi tambahan yang bisa Anda pelajari untuk mendalami seputar Object-Oriented Programming (OOP):
 	- oop for beginner : https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS
 	- a guide oop in js : https://betterprogramming.pub/object-oriented-programming-in-javascript-b3bda28d3e81
+
+
+
+
+# Functional Programming red
+! Paradigma Functional Programming adalah paradigma pemrograman di mana proses komputasi didasarkan pada fungsi matematika murni. Functional Programming (selanjutnya akan kita singkat menjadi FP) ditulis dengan gaya deklaratif yang berfokus pada “what to solve” dibanding “how to solve” yang dianut oleh gaya imperatif.
+
+## Konsep - Konsep FP
+! 4 konsep besar yang ada di FP(Functional Programming). Yakni Pure Function, Immutability, Recursive, dan High-Order Function.
+
+### Pure Function 
+! Salah satu konsep besar dari paradigma FP adalah Pure Function. Apa artinya? Pure Function merupakan konsep dari pembuatan fungsi yang mengharuskan fungsi untuk tidak bergantung terhadap nilai yang berada di luar fungsi atau parameternya. Sehingga mau seperti apa keadaanya, fungsi yang dibuat selalu menghasilkan sesuatu yang sama, terkecuali bila fungsi tersebut diberikan nilai parameter yang berbeda.
+! pure function juga dilarang keras untuk mengubah nilai yang berada di luar baik secara sengaja atau tidak sengaja.
+
+! Agar lebih mudah dalam mengetahui apakah fungsi yang Anda buat sudah pure atau belum, pastikan 3 konsep ini ada pada fungsi yang Anda buat.
+	- Mengembalikan nilai yang sama bila inputannya (nilai parameter) sama.
+	- Hanya bergantung pada argumen yang diberikan.
+	- Tidak menimbulkan efek samping.
+
+### Immutability 
+! Konsep yang kedua adalah immutability. Immutable berarti sebuah objek tidak boleh diubah setelah objek tersebut dibuat. Kontras dengan mutable yang artinya objek boleh diubah setelah objek tersebut dibuat.
+! contoh penggunaan array map. Ketika menggunakan array.map(), alih-alih ia mengubah nilai dari array itu sendiri, malah ia membuat atau menghasilkan array baru.
+
+// cotoh
+	const user = {
+	    firstname: 'Harry',
+	    lastName: 'Protter', // ups, typo!
+	}
+
+	const createUserWithNewLastName = (newLastName, user) => {
+	    return { ...user, lastName: newLastName }
+	}
+
+	const newUser = createUserWithNewLastName('Potter', user);
+
+	console.log(newUser);
+
+### Higher-Order Function
+! JavaScript memiliki kemampuan First Class Functions, karena itu fungsi pada JavaScript dapat diperlakukan layaknya sebuah data. Kita bisa menyimpan function dalam variabel, memberikan function sebagai parameter pada fungsi lainnya, hingga mengembalikan function di dalam function.
+
+! Higher-Order Function merupakan fungsi yang dapat menerima fungsi lainnya pada argumen; mengembalikan sebuah fungsi; atau bahkan keduanya.
+
+! Teknik Higher-Order Function biasanya digunakan untuk:
+	- Mengabstraksi atau mengisolasi sebuah aksi, event, atau menangani alur asynchronous menggunakan callback, promise, dan lainnya.
+	- Membuat utilities yang dapat digunakan diberbagai tipe data.
+	- Membuat teknik currying atau function composition.
+
+// contoh currying ???
+	function curry(f) { // curry(f) does the currying transform
+	  return function(a) {
+	    return function(b) {
+	      return f(a, b);
+	    };
+	  };
+	}
+
+	// usage
+	function sum(a, b) {
+	  return a + b;
+	}
+
+	let curriedSum = curry(sum);
+
+	alert( curriedSum(1)(2) ); // 3
+
+
+
+## Reusable Function 
+! kita akan coba membahas dan menggunakan beberapa reusable function yang sudah ada di JavaScript. Khususnya beberapa Higher-Order Function yang dimiliki array, seperti map, filter, dan forEach.
+
+### Array Filter
+// contoh : 
+	const truthyArray = [1, '', 'Hallo', 0, null, 'Harry', 14].filter((item) => Boolean(item));
+
+	console.log(truthyArray);
+
+	/*
+	 * output:
+	 * [ 1, 'Hallo', 'Harry', 14 ]
+	 * 
+ 	*/
+
+### Array Find
+! Yang membedakan array.find() dengan array.some(), find akan menghasilkan satu nilai dari elemen yang pertama kali ditemukan berdasarkan kriteria tertentu dan akan menghasilkan nilai undefine bila tidak ada kriteria yang terpenuhi pada item array.
+
+// contoh : 
+	const students = [
+	  {
+	    name: 'Harry',
+	    score: 60,
+	  },
+	  {
+	    name: 'James',
+	    score: 88,
+	  },
+	  {
+	    name: 'Ron',
+	    score: 90,
+	  },
+	  {
+	    name: 'Bethy',
+	    score: 75,
+	  }
+	];
+
+	const findJames = students.find(student => student.name === 'James');
+	console.log(findJames);
+
+	/**
+	output
+	{ name: 'James', score: 88 }
+	**/
+
+
+### Array sort
+! array.sort() merupakan fungsi bawaan dari array yang berguna untuk melakukan pengurutan nilai dari sebuah deretan nilai. Secara default, fungsi sort akan mengubah semua nilai dalam deretan menjadi bentuk string dan mengurutkannya secara ascending.
+
+// contoh : 
+	const months = ['March', 'Jan', 'Feb', 'Dec'];
+	months.sort();
+	console.log(months);
+	// output: [ 'Dec', 'Feb', 'Jan', 'March' ]
+
+	const array1 = [1, 30, 4, 1000, 101, 121];
+	array1.sort();
+	console.log(array1);
+	// output: [ 1, 1000, 101, 121, 30, 4 ] // tidak terurut
+
+
+// contoh sort tipe data number
+	const array1 = [1, 30, 4, 1000];
+
+	const compareNumber = (a, b) => {
+	  return a - b;
+	};
+	const sorting = array1.sort(compareNumber);
+	console.log(sorting);
+
+	/**
+	output
+	[ 1, 4, 30, 1000 ]
+	**/
+
+	! Pada compare function, fungsi akan membandingkan 2 nilai yang akan menghasilkan 3 result yaitu negatif (-), 0, dan positif (+).
+		- Jika, negative maka `a` akan diletakan sebelum `b`
+		- Jika, positive maka `b` akan diletakan sebelum `a`
+		- Jika, 0 maka tidak ada perubahan posisi.
+
+
+### Array every
+! array.every() merupakan fungsi bawaan dari array yang digunakan untuk mengecheck apakah semua nilai dari sebuah array sesuai dengan kriteria yang didefinisikan. Kembalian dari array.every() adalah nilai Boolean.
+
+// contoh : 
+	const scores = [70,85,90];
+	const minimumScore = 65;
+
+	const examPassed = scores.every(score => score >= minimumScore);
+	console.log(examPassed);
+
+	/**
+	output
+	true
+	**/
+
+
+
+
+
+
 
 
 

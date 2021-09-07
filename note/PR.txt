@@ -1,0 +1,3 @@
+$Question 
+1. perbedaan pure function dan immutability dan contohnya (materi konsep-konseop functional)
+2. cara logika parameter dalam array.sort() untuk mengurutkan data numerik (materi reusable function -> array sort)
