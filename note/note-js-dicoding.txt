@@ -708,6 +708,472 @@
 
 
 
+# Setup Environment red
+
+## Node.js
+! Node.js adalah runtime environment untuk JavaScript yang bersifat open-source dan cross-platform. Dengan Node.js kita dapat menjalankan kode JavaScript di mana pun, tidak hanya terbatas pada lingkungan browser.
+
+! Berikut ini adalah beberapa fitur penting dari Node.js yang menjadikannya pilihan utama dalam pengembangan aplikasi:
+	- Asynchronous & Event-driven
+		Semua API dari Node.js bersifat asynchronous, artinya tidak memblokir proses lain sembari menunggu satu proses selesai. Server Node.js akan melanjutkan ke ke pemanggilan API berikutnya lalu memanfaatkan mekanisme event notification untuk mendapatkan respon dari panggilan API sebelumnya.
+	- Very Fast
+		Eksekusi kode dengan Node.js sangat cepat karena berjalan pada V8 JavaScript Engine dari Google Chrome.
+	- Single Threaded but Highly Scalable
+		Node.js menggunakan model single thread dengan event looping. Mekanisme ini membantu server untuk merespon secara asynchronous dan menjadikan server lebih scalable dibandingkan server tradisional yang menggunakan banyak thread untuk menangani permintaan.
+
+
+# Module
+
+## Export dan Import
+// contoh : 
+	// di file state.js
+	...
+	module.exports = coffeeStock;
+
+	// di file index.js
+	const coffeeStock = require('./state');
+	....
+
+## Export Beberapa Nilai pada Node.js
+// contoh : 
+	// di file state.js
+	...
+	module.exports = {coffeeStock, isCoffeeMachineReady}; 
+
+	// di file index.js
+	const {coffeeStock, isCoffeeMachineReady} = require('./state');
+	....
+
+
+## ES6 Module
+! Pada ES6 module, jika kita hanya mengekspor satu nilai pada sebuah berkas JavaScript baik itu primitive value, function, array, object, atau class, kita gunakan keyword export default.
+// contoh : 
+	const coffeeStock = {
+	    arabica: 100,
+	    robusta: 150,
+	    liberica: 200
+	};
+	 
+	export default coffeeStock;	
+	// -> Lalu untuk mengimpor nilainya kita dapat menggunakan keyword import … from seperti berikut ini:
+
+	import coffeeStock from "./state.js"; // wajib pke .js
+
+	! Berbeda dengan gaya Node.js, kita gunakan keyword import ketika mendeklarasikan variabel yang di-import. Kita juga menggunakan keyword from untuk menentukan lokasi berkas JavaScript-nya.
+	! Ketika menggunakan export default, kita dapat menggunakan penamaan apa saja saat mendeklarasikan variabel untuk menyimpan nilai yang diimpor.
+		! Hal tersebut aman untuk dilakukan karena dengan menggunakan export default dapat dipastikan hanya satu nilai yang diekspor pada satu berkas JavaScript.
+	!! Saat ini, fitur ES6 module tidak secara default diaktifkan. kita dapat mengaktifkannya dengan cara Tambahkan properti 'type' dengan nilai 'module' pada berkas package.json
+		// contoh : 
+			{
+			  "name": "coffeemachine",
+			  "version": "1.0.0",
+			  "description": "",
+			  "main": "index.js",
+			  "type": "module",
+			  "scripts": {
+			    "test": "echo \"Error: no test specified\" && exit 1",
+			    "start": "node index.js"
+			  },
+			  "author": "",
+			  "license": "ISC"
+			}
+
+// mengekspor banyak nilai dalam satu berkas JavaScript menggunakan ES6.
+	! Named export digunakan untuk mengekspor banyak nilai dalam berkas JavaScript. Cara kerjanya mirip seperti pada Node.js. Nilai yang akan diekspor dituliskan di dalam object literals, seperti ini:
+		const coffeeStock = {
+		    arabica: 100,
+		    robusta: 150,
+		    liberica: 200
+		};
+		 
+		const isCoffeeMachineReady = true;
+		 
+		export {coffeeStock, isCoffeeMachineReady};
+
+	// -> Lalu untuk mendapatkan nilai yang diekspor melalui named export, kita gunakan destructuring object.
+		import { coffeeStock as namaAlias(opsional), isCoffeeMachineReady } from './state.js';
+		 
+		console.log(namaAlias);
+		console.log(isCoffeeMachineReady);
+		 
+		/* output
+		{ arabica: 100, robusta: 150, liberica: 200 }
+		true
+		*/
+
+
+# Penanganan Error red
+
+## Try and Catch
+// contoh : 
+	try {
+	    console.log("Awal blok try");   // (1)
+	    errorCode;                      // (2)
+	    console.log("Akhir blok try");  // (3)
+	} catch (error) {
+	    console.log(error.name);
+	    console.log(error.message);
+	    console.log(error.stack);
+	}
+	 
+	/* output
+	Awal blok try
+	ReferenceError
+	errorCode is not defined
+	ReferenceError: errorCode is not defined
+	    at file:///home/dicoding/Playground/javascript/CoffeeMachine/error.js:3:5
+	    at ModuleJob.run (internal/modules/esm/module_job.js:152:23)
+	    at async Loader.import (internal/modules/esm/loader.js:166:24)
+	    at async Object.loadESM (internal/process/esm_loader.js:68:5)
+	*/
+
+
+! Object error memiliki beberapa properti utama di dalamnya, yaitu:
+	- name : Nama error yang terjadi.
+	- message : Pesan tentang detail error.
+	- stack : Informasi urutan kejadian yang menyebabkan error. Umumnya digunakan untuk debugging karena terdapat informasi baris mana yang menyebabkan error.
+
+
+### try-catch-finally
+! Blok finally akan tetap dijalankan tanpa peduli apa pun hasil yang terjadi pada blok try-catch.
+// contoh : 
+	try {
+	    console.log("Awal blok try");
+	    console.log("Akhir blok try");
+	} catch (error) {
+	    console.log("Baris ini diabaikan");
+	} finally {
+	    console.log("Akan tetap dieksekusi");
+	}
+
+
+## Throwing Error
+! Operator throw ini akan “melemparkan” eror pada program, sehingga eksekusi kode akan masuk pada blok catch
+// contoh : 
+	let json = '{ "name": "Yoda", "age": 20 }';
+	 
+	try {
+	    let user = JSON.parse(json);
+	 
+	    if (!user.name) {
+	        throw new SyntaxError("'name' is required.");
+	    }
+	 
+	    errorCode;
+	 
+	    console.log(user.name); // Yoda
+	    console.log(user.age);  // 20
+	} catch (error) {
+		
+	    if (error instanceof SyntaxError) {
+	        console.log(`JSON Error: ${error.message}`);
+	    } else if (error instanceof ReferenceError) {
+	        console.log(error.message);
+	    } else {
+	        console.log(error.stack);
+	    }
+	}
+	 
+	/* output
+	errorCode is not defined
+	*/
+
+	! Dengan operator instanceOf, kita bisa mendapatkan tipe dari eror yang terjadi. Dari sana kita bisa membuat percabangan bagaimana cara menangani erornya.
+
+
+## Custom Error
+! Untuk itu kita bisa membuat kelas Error kita sendiri dengan nama dan pesan yang lebih sesuai. Kelas ini merupakan turunan dari kelas Error yang sudah ada : 
+	class ValidationError extends Error {
+	    constructor(message) {
+	        super(message);
+	        this.name = "ValidationError";
+	    }
+	}
+
+// contoh custom error
+	class ValidationError extends Error {
+	    constructor(message) {
+	        super(message);
+	        // this.name = "ValidationError"; // ini buat apaan?
+	    }
+	}
+	 
+	let json = '{ "age": 30 }';
+	 
+	try {
+	    let user = JSON.parse(json);
+	 
+	    if (!user.name) {
+	        throw new ValidationError("'name' is required.");
+	    }
+	    if (!user.age) {
+	        throw new ValidationError("'age' is required.");
+	    }
+	 
+	    console.log(user.name);
+	    console.log(user.age);
+	} catch (error) {
+	    if (error instanceof SyntaxError) {
+	        console.log(`JSON Syntax Error: ${error.message}`);
+	    } else if (error instanceof ValidationError) {
+	        console.log(`Invalid data: ${error.message}`);
+	    } else if (error instanceof ReferenceError) {
+	        console.log(error.message);
+	    } else {
+	        console.log(error.stack);
+	    }
+	}
+	 
+	/* output
+	Invalid data: 'name' is required.
+	*/
+
+
+
+
+# Concurrency red
+! Concurrency sendiri berarti beberapa komputasi yang terjadi pada saat yang bersamaan
+## Asynchronous vs Synchronous
+
+## setTimeout
+
+## Callback Function 
+// contoh : 
+	const orderCoffee = callback => {
+	    let coffee = null;
+	    console.log("Sedang membuat kopi, silakan tunggu...");
+	    setTimeout(() => {
+	        coffee = "Kopi sudah jadi!";
+	        callback(coffee);
+	    }, 3000);
+	}
+	 
+	 
+	orderCoffee(coffee => {
+	    console.log(coffee);
+	});
+	 
+	 
+	/* output
+	Sedang membuat kopi, silakan tunggu...
+	---- setelah 3 detik ----
+	Kopi sudah jadi!
+	*/
+
+
+## Promise
+! Dengan Promise, kita dapat meminimalisir callback hell dan mengubahnya menjadi kode yang sangat mudah dibaca. 
+! Promise merupakan salah satu fitur penting dari ES6. Promise ini dapat menggantikan peran callback dengan menggunakan ciri khas fungsi .then-nya.
+! Promise memiliki tiga kondisi, yaitu:
+	- Pending (Janji sedang dalam proses)
+	- Fulfilled (Janji terpenuhi)
+	- Rejected (Janji gagal terpenuhi)
+
+
+
+
+## Contructing Promise
+! Promise merupakan sebuah objek yang digunakan untuk membuat sebuah komputasi (kode) ditangguhkan dan berjalan secara asynchronous [5]. Untuk membuat objek promise, kita gunakan keyword new diikuti dengan constructor dari Promise
+
+// contoh
+	const executorFunction = (resolve, reject) => {
+	    const isCoffeeMakerReady = true;
+	    if (isCoffeeMakerReady) {
+	        resolve("Kopi berhasil dibuat");
+	    } else {
+	        reject("Mesin kopi tidak bisa digunakan");
+	    }
+	}
+	 
+	 
+	const makeCoffee = () => {
+	    return new Promise(executorFunction);
+	}
+	const coffeePromise = makeCoffee();
+	console.log(coffeePromise);
+	 
+	 
+	/* output
+	Promise { 'Kopi berhasil dibuat' } // ! masih dalam bentuk promise
+	*/
+	! Executor function memiliki dua parameter, yaitu resolve dan reject yang berupa fungsi. Berikut penjelasan detailnya:
+		- resolve() adalah parameter pertama pada executor function. Parameter ini merupakan fungsi yang dapat menerima satu parameter. Biasanya kita gunakan untuk mengirimkan data ketika promise berhasil dilakukan. Ketika fungsi ini terpanggil, kondisi Promise akan berubah dari pending menjadi fulfilled.
+		- reject() adalah parameter kedua pada executor function. Parameter ini merupakan fungsi yang dapat menerima satu parameter dan digunakan untuk memberikan alasan kenapa Promise tidak dapat terpenuhi. Ketika fungsi ini terpanggil, kondisi Promise akan berubah dari pending menjadi rejected.
+
+
+## Consuming Promises
+! Untuk menangani hasil dari Promise, kita gunakan method .then(). Jika kita terjemahkan, “then” berarti “kemudian”, sehingga kurang lebih kita memerintahkan JavaScript seperti ini: “Jika janji saya sudah selesai, kemudian lakukan ...”.
+// contoh :
+	const stock = {
+	    coffeeBeans: 250,
+	    water: 1000,
+	}
+	 
+	const checkStock = () => {
+	    return new Promise((resolve, reject) => {
+	        if (stock.coffeeBeans >= 16 && stock.water >= 250) {
+	            resolve("Stok cukup. Bisa membuat kopi");
+	        } else {
+	            reject("Stok tidak cukup");
+	        }
+	    });
+	});
+	 
+	const handleSuccess = resolvedValue => {
+	    console.log(resolvedValue);
+	}
+	 
+	const handleFailure = rejectionReason => {
+	    console.log(rejectionReason);
+	}
+	 
+	checkStock().then(handleSuccess, handleFailure);
+
+	! Mari kita bedah kode di atas:
+		- checkStock() merupakan fungsi yang mengembalikan promise dan akan menghasilkan resolve() dengan membawa nilai “Stok cukup. Bisa membuat kopi”.
+		- Lalu kita mendeklarasikan fungsi handleSuccess() dan handleFailure() yang mencetak nilai dari parameternya.
+		- Kemudian kita memanggil method .then() dari checkStock. Isi parameter then() dengan dua fungsi handler yang telah kita buat sebelumnya.
+		- Parameter pertama berisi fungsi handleSuccess untuk menangani kondisi ketika promise berstatus resolve. Parameter kedua berisi fungsi handleFailure yang menangani ketika promise berstatus reject.
+
+
+## onRejected with Catch Method
+! Salah satu cara menulis kode yang baik adalah mengikuti prinsip yang disebut separation of concerns atau pemisahan masalah. Pemisahan masalah berarti mengorganisasikan kode ke dalam bagian-bagian yang berbeda berdasarkan tugas tertentu. Hal ini akan memudahkan kita kelak mencari kode yang salah jika aplikasi tidak bekerja dengan baik.
+! Perlu diketahui bahwa method .then() akan mengembalikan nilai promise yang sama dengan ketika objek promise itu dipanggil. Melalui sifatnya ini, daripada kita menetapkan logika resolve dan reject pada satu method then(), kita dapat memisahkan kedua logika tersebut menggunakan masing-masing method then() seperti ini:
+	checkStock()
+	  .then(handleSuccess)
+	  .then(null, handleFailure);
+
+	-> Namun untuk menetapkan onRejected handler, kita perlu memberikan nilai null pada parameter pertama method .then(). Hal ini sedikit merepotkan bukan? Solusinya kita dapat menggunakan method lain, yakni .catch().
+		checkStock()
+		  .then(handleSuccess)
+		  .catch(handleFailure);
+
+
+## Chaining Promises
+	// contoh : 
+	const state = {
+	    stock: {
+	        coffeeBeans: 250,
+	        water: 1000,
+	    },
+	    isCoffeeMachineBusy: false,
+	}
+	 
+	const checkAvailability = () => {
+	    return new Promise((resolve, reject) => {
+	        setTimeout(() => {
+	            if (!state.isCoffeeMachineBusy) {
+	                resolve("Mesin kopi siap digunakan.");
+	            } else {
+	                reject("Maaf, mesin sedang sibuk.");
+	            }
+	        }, 1000);
+	    });
+	};
+	 
+	const checkStock = () => {
+	    return new Promise((resolve, reject) => {
+	        state.isCoffeeMachineBusy = true;
+	        setTimeout(() => {
+	            if (state.stock.coffeeBeans >= 16 && state.stock.water >= 250) {
+	                resolve("Stok cukup. Bisa membuat kopi.");
+	            } else {
+	                reject("Stok tidak cukup!");
+	            }
+	        }, 1500);
+	    });
+	};
+	 
+	const brewCoffee = () => {
+	    console.log("Membuatkan kopi Anda...")
+	    return new Promise((resolve, reject) => {
+	        setTimeout(() => {
+	            resolve("Kopi sudah siap!")
+	        }, 2000);
+	    });
+	};
+
+	const boilWater = () => {
+	    return new Promise((resolve, reject) => {
+	        console.log("Memanaskan air...");
+	        setTimeout(() => {
+	            resolve("Air panas sudah siap!");
+	        }, 2000);
+	    })
+	}
+	 
+	const grindCoffeeBeans = () => {
+	    return new Promise((resolve, reject) => {
+	        console.log("Menggiling biji kopi...");
+	        setTimeout(() => {
+	            resolve("Kopi sudah siap!");
+	        }, 1000);
+	    })
+	}
+	 
+	function makeEspresso() {
+	    checkAvailability()
+	        .then((value) => {
+	            console.log(value);
+	            return checkStock();
+	        })
+	        .then((value) => {
+	            console.log(value)
+	            return brewCoffee();
+	        })
+	        .then(value => {
+	            console.log(value);
+	            state.isCoffeeMachineBusy = false;
+	        })
+	        .catch(rejectedReason => {
+	            console.log(rejectedReason);
+	            state.isCoffeeMachineBusy = false;
+	        });
+	}
+	 
+	makeEspresso();
+	 
+	/* output
+	Mesin kopi siap digunakan.
+	Stok cukup. Bisa membuat kopi.
+	Membuatkan kopi Anda...
+	Kopi sudah siap!
+	*/	
+
+
+
+## Promise All
+! Method Promise.all() dapat menerima banyak promise dalam bentuk array pada parameternya. Kemudian method tersebut akan mengembalikan nilai seluruh hasil dari promise dalam bentuk array.
+// contoh : 
+	const promises = [firstPromise(), secondPromise(), thirdPromise()];
+ 
+	Promise.all(promises)
+	    .then(resolvedValue => {
+	        console.log(resolvedValue);
+	    });
+	 
+	/* output
+	[ 'first promise', 'second promise', 'third promise' ]
+	*/
+
+! semua promise di dalam Promise.all() berjalan bersamaan dan menunggu sampai semua proses di dalamnya selesai dijalankan.
+! Yang perlu kita perhatikan, urutan nilai yang dihasilkan oleh method ini sesuai dengan promise yang kita tentukan pada parameternya.
+
+
+## Async-await
+! Fitur async/await sebenarnya hanya syntactic sugar. Itu berarti secara fungsionalitas bukanlah sebuah fitur baru dalam JavaScript. Namun, hanya gaya penulisan baru yang dikembangkan dari kombinasi penggunaan Promise dan generator 
+// contoh (Handle onRejected using async-await, chaining promise using async-await): 
+	async function makeEspresso() {
+	    try {
+	        await checkAvailability();
+	        await checkStock();
+	        await Promise.all([boilWater(), grindCoffeeBeans()]);
+	        const coffee = await brewCoffee();
+	        console.log(coffee);
+	    } catch (rejectedReason) {
+	        console.log(rejectedReason);
+	    }
+	}
 
 
 
@@ -720,7 +1186,25 @@
 
 
 
-!! NOTE !! 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+!! NOTE !! red
 ! Tiap bahasa pemrograman memiliki **hampir** tipe data primitif yang sama
 ! operator pangkat di javascript : **
 	// contoh 2 pangkat 3 : 2**3
@@ -738,5 +1222,5 @@
 ! Metode Object.assign(target, source1, sourceN,) menyalin semua properti enumerable sendiri dari satu atau lebih objek sumber ke objek target. Ini mengembalikan objek target yang dimodifikasi.
 
 ! epoch mili-detik (dimulai dari 1 January, 1970 yang berarti 0)
-
+! LTS merupakan kepanjangan dari Long Term Support.
 
