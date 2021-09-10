@@ -1,0 +1,14 @@
+{
+  "name": "latihan3-jest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "febrianto",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.1.1"
+  }
+}
