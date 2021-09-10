@@ -1288,8 +1288,13 @@ $$-- Package Lodash
 	- toBeNull()	bahwa nilai ekspektasi yang diharapkan adalah null
 	- toBeTruthy()	bahwa nilai ekspektasi yang diharapkan adalah truth
 	- toBeFalsy()	bahwa nilai ekspektasi yang diharapkan adalah false
---$$
 
+// untuk membuat file hasil testing
+	- npm run test -- --coverage 
+
+! link jest cheatsheet : https://devhints.io/jest
+--$$
+!! contoh source code ada di folder latihan3-jest
 
 
 

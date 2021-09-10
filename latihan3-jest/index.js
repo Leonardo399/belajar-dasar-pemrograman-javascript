@@ -1,8 +1,8 @@
-const {
-  averageExams
-} = require('./gradeCalculations.js');
+const capital = {
+  "Jakarta": "Indonesia",
+  "London": "England",
+  "Tokyo": "Japan"
+}
+capital["New Delhi"] = "Indonesia";
 
-test('it should return exact average', () => {
-  const listValueOfExams = [80, 100, 100, 80];
-  expect(averageExams(listValueOfExams)).toEqual(90);
-});
+console.log(capital["Indonesia"]);
