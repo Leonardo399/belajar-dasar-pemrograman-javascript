@@ -372,7 +372,7 @@
 
 	const wa1 = new WhatsApp(080111000222);
 	console.log(wa1.myProfile());
-	// my name dicoding, is Business
+	// output : my name dicoding, is Business
 
 
 ### Polymorphism
@@ -428,7 +428,7 @@
 
 	! Untuk tetap melakukan eksekusi kode pada parent class maka perlu menggunakan operator super.methodName().
 		sendMessage(msg, to) {
-		    super.sendMessage(msg, to);
+		    super.sendMessage(msg, to); // gold
 		    console.log('Send by WA');
 		}
 
@@ -464,8 +464,8 @@
 	};
 
 	const pe1 = personalEnterprise('pengirim@gmail.com', 'hei produk baru nih', 'Dicoding Store');
-	pe1.createCatalog(); //Catalog has created:  Dicoding Store
-	pe1.sendMessage(); //send message: hei produk baru nih
+	pe1.createCatalog(); // output : Catalog has created:  Dicoding Store
+	pe1.sendMessage(); // output : send message: hei produk baru nih
 
 ! Penjabaran kode di atas:
 	1. Kita membuat sebuah abstraksi untuk method-method yang umum digunakan (di sini misalkan method mengirim pesan, dan validasi nomor hp).
@@ -605,7 +605,7 @@
 
 	let curriedSum = curry(sum);
 
-	alert( curriedSum(1)(2) ); // 3
+	alert( curriedSum(1)(2) ); // output : 3
 
 
 
@@ -722,7 +722,7 @@
 		Node.js menggunakan model single thread dengan event looping. Mekanisme ini membantu server untuk merespon secara asynchronous dan menjadikan server lebih scalable dibandingkan server tradisional yang menggunakan banyak thread untuk menangani permintaan.
 
 
-# Module
+# Module red
 
 ## Export dan Import
 // contoh : 
@@ -891,7 +891,7 @@
 	}
 
 // contoh custom error
-	class ValidationError extends Error {
+	class ValidationError extends Error { // namaClass Bebas asal memiliki makna
 	    constructor(message) {
 	        super(message);
 	        // this.name = "ValidationError"; // ini buat apaan?
